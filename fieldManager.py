@@ -15,7 +15,7 @@ class FieldManager(object):
         # Set up GPIO for coil control
         self.dac.pi.set_PWM_frequency(self.pinXpwm, self.pwmFreq)
         self.dac.pi.set_PWM_frequency(self.pinYpwm, self.pwmFreq)
-        self.dac.pi.set_PWM_frequency(self.pinYpwm, self.pwmFreq)
+        self.dac.pi.set_PWM_frequency(self.pinZpwm, self.pwmFreq)
         self.dac.set_pin_to_write_mode(self.pinXdir)
         self.dac.set_pin_to_write_mode(self.pinYdir)
         self.dac.set_pin_to_write_mode(self.pinZdir)
@@ -61,9 +61,9 @@ class FieldManager(object):
         # output is determined based on the desired voltage and the
         # supply voltage.
         if mT>=0:
-            self.dac.output_voltage_pwm(self.pinXpwm, self.pinXdir, 0.0065*(mT**3)-0.0494*(mT**2)+1.4534*mT , self.VsupplyX)
+            self.dac.output_voltage_pwm(self.pinXpwm, self.pinXdir, mT, self.VsupplyX)
         else:
-            self.dac.output_voltage_pwm(self.pinXpwm, self.pinXdir, 0.0065*(mT**3)+0.0494*(mT**2)+1.4534*mT , self.VsupplyX)
+            self.dac.output_voltage_pwm(self.pinXpwm, self.pinXdir, mT, self.VsupplyX)
         self.bxSetpoint = mT
 
     def setY(self, mT):
@@ -74,9 +74,9 @@ class FieldManager(object):
         # output is determined based on the desired voltage and the
         # supply voltage.
         if mT>=0:
-            self.dac.output_voltage_pwm(self.pinYpwm, self.pinYdir, 0.0036*(mT**3)-0.0314*(mT**2)+0.9386*mT , self.VsupplyY)
+            self.dac.output_voltage_pwm(self.pinYpwm, self.pinYdir, mT, self.VsupplyY)
         else:
-            self.dac.output_voltage_pwm(self.pinYpwm, self.pinYdir, 0.0036*(mT**3)+0.0314*(mT**2)+0.9386*mT , self.VsupplyY)
+            self.dac.output_voltage_pwm(self.pinYpwm, self.pinYdir, mT, self.VsupplyY)
         self.bySetpoint = mT
 
     def setZ(self, mT):
@@ -87,9 +87,9 @@ class FieldManager(object):
         # output is determined based on the desired voltage and the
         # supply voltage.
         if mT>=0:
-            self.dac.output_voltage_pwm(self.pinZpwm, self.pinZdir, 0.0014*(mT**3)-0.0178*(mT**2)+0.571*mT , self.VsupplyZ)
+            self.dac.output_voltage_pwm(self.pinZpwm, self.pinZdir, mT, self.VsupplyZ)
         else:
-            self.dac.output_voltage_pwm(self.pinZpwm, self.pinZdir, 0.0014*(mT**3)+0.0178*(mT**2)+0.571*mT , self.VsupplyZ)
+            self.dac.output_voltage_pwm(self.pinZpwm, self.pinZdir, mT, self.VsupplyZ)
         self.bzSetpoint = mT
 
     def setXYZ(self, x_mT, y_mT, z_mT):
